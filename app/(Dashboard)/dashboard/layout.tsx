@@ -1,5 +1,6 @@
 import DashboardNav from "@/components/Dashboard-Nav";
 import SiteHeader from "@/components/Site-Header"
+import { SiteFooter } from "@/components/site-footer";
 import { dashboardConfig } from "@/config/dashboard";
 import { getCurrentUser } from "@/libs/session"
 
@@ -23,7 +24,7 @@ export default async function DashboardLayout({ children, }: { children: React.R
                     {children}
                 </main>
             </div>
-            {/* <SiteFooter className="border-t" /> */}
+            <SiteFooter className="border-t" />
         </div>
     )
 }
