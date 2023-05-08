@@ -1,7 +1,18 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
+import { Inter as FontSans } from "next/font/google"
+import localFont from "next/font/local"
 
-const inter = Inter({ subsets: ['latin'] })
+import "@/styles/globals.css"
+import { cn } from "@/libs/utils"
+
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
+
+const fontHeading = localFont({
+  src: "../assets/fonts/CalSans-SemiBold.woff2",
+  variable: "--font-heading",
+})
 
 export const metadata = {
   title: 'Sparkle Press | Dashboard - Auth',
@@ -15,7 +26,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable,
+          fontHeading.variable
+        )}>{children}</body>
     </html>
   )
 }
