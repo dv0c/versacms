@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth/next';
 
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import prisma from '@/libs/prismadb';
+import { db } from '@/libs/prismadb';
 
 export async function getSession() {
     return await getServerSession(authOptions);
@@ -13,7 +13,7 @@ export async function getCurrentUser() {
 
         if (!session?.user?.email) return null;
 
-        const currentUser = await prisma.user.findUnique({
+        const currentUser = await db.user.findUnique({
             where: {
                 email: session?.user?.email as string,
             },
