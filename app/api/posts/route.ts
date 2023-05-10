@@ -49,7 +49,7 @@ export async function POST(req: Request) {
             data: {
                 title: body.title,
                 content: body.content,
-                authorId: session.user?.id || "",
+                authorId: user?.id || "",
             },
             select: {
                 id: true,
