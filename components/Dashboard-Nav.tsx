@@ -1,7 +1,7 @@
 'use client'
 
 import { Icons } from "@/components/icons"
-import { DashboardConfig } from "@/types";
+import { DashboardConfig } from "@/types/index";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
