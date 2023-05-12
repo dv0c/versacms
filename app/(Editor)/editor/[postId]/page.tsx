@@ -5,6 +5,7 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { db } from "@/libs/prismadb"
 import { getCurrentUser } from "@/libs/session"
 import { Editor } from "@/components/editor"
+import { ObjectId } from 'bson';
 
 async function getPostForUser(postId: Post["id"], userId: User["id"]) {
     return await db.post.findFirst({
@@ -19,18 +20,16 @@ interface EditorPageProps {
     params: { postId: string }
 }
 
-export default async function EditorPage({ params }: EditorPageProps) {
+export default async function EditorPage({ params }: EditorPageProps) {     
     const user = await getCurrentUser()
-
+    
     if (!user) {
         redirect(authOptions?.pages?.signIn || "/")
     }
-
+    
     const post = await getPostForUser(params.postId, user.id)
-
-    if (!post) {
-        notFound()
-    }
+    
+    if (!post) notFound()
 
     return (
         <Editor

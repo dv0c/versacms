@@ -1,5 +1,8 @@
+import { uuid } from '@/libs/utils'  
+
 import { getServerSession } from "next-auth/next"
 import * as z from "zod"
+
 
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { db } from '@/libs/prismadb'
@@ -42,11 +45,13 @@ export async function POST(req: Request) {
 
         const { user } = session
 
+
         const json = await req.json()
         const body = postCreateSchema.parse(json)
 
         const post = await db.post.create({
             data: {
+                id: uuid(),
                 title: body.title,
                 content: body.content,
                 authorId: user?.id || "",

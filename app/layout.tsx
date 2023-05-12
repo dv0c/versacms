@@ -3,6 +3,7 @@ import localFont from "next/font/local"
 
 import "@/styles/globals.css"
 import { cn } from "@/libs/utils"
+import { Toaster } from "@/components/ui/toaster"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -27,10 +28,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-          fontHeading.variable
-        )}>{children}</body>
+        "min-h-screen bg-background font-sans antialiased",
+        fontSans.variable,
+        fontHeading.variable
+      )}>{children}
+        <Toaster />
+      </body>
     </html>
   )
 }

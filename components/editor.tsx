@@ -134,7 +134,7 @@ export function Editor({ post }: EditorProps) {
                 Back
               </>
             </Link>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground select-none">
               {post.published ? "Published" : "Draft"}
             </p>
           </div>
@@ -155,7 +155,7 @@ export function Editor({ post }: EditorProps) {
             {...register("title")}
           />
           <div id="editor" className="min-h-[500px]" />
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 select-none">
             Use{" "}
             <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
               Tab
