@@ -5,7 +5,6 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { db } from "@/libs/prismadb"
 import { getCurrentUser } from "@/libs/session"
 import { Editor } from "@/components/editor"
-import { ObjectId } from 'bson';
 
 async function getPostForUser(postId: Post["id"], userId: User["id"]) {
     return await db.post.findFirst({

@@ -4,6 +4,7 @@ import localFont from "next/font/local"
 import "@/styles/globals.css"
 import { cn } from "@/libs/utils"
 import { Toaster } from "@/components/ui/toaster"
+import { ThemeProvider } from "@/components/theme-provider"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -31,8 +32,11 @@ export default function RootLayout({
         "min-h-screen bg-background font-sans antialiased",
         fontSans.variable,
         fontHeading.variable
-      )}>{children}
-        <Toaster />
+      )}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   )
