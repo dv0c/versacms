@@ -39,7 +39,7 @@ export default async function Dashboard() {
                 {posts?.length ? (
                     <div className="divide-y divide-border rounded-md border">
                         {posts.map((post) => (
-                            <PostItem key={post.id} post={post} />
+                            <PostItem mode="category" key={post.id} post={post} />
                         ))}
                     </div>
                 ) : (
@@ -49,7 +49,7 @@ export default async function Dashboard() {
                         <EmptyPlaceholder.Description>
                             You don&apos;t have any posts yet. Start creating content.
                         </EmptyPlaceholder.Description>
-                        <PostCreateButton variant="outline" />
+                        <PostCreateButton mode={"category"} name="Create Category" variant="outline" />
                     </EmptyPlaceholder>
                 )}
             </div>

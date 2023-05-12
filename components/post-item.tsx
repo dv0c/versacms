@@ -4,12 +4,14 @@ import { Post } from "@prisma/client"
 import { formatDate } from "@/libs/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { PostOperations } from "@/components/post-operations"
+import { CategoryOperations } from "./category-operations"
 
 interface PostItemProps {
-  post: Pick<Post, "id" | "title" | "published" | "createdAt">
+  post: Pick<Post, "id" | "title" | "published" | "createdAt">,
+  mode: string
 }
 
-export function PostItem({ post }: PostItemProps) {
+export function PostItem({ post, mode }: PostItemProps) {
   return (
     <div className="flex items-center justify-between p-4">
       <div className="grid gap-1">
@@ -25,7 +27,9 @@ export function PostItem({ post }: PostItemProps) {
           </p>
         </div>
       </div>
-      <PostOperations post={{ id: post.id, title: post.title }} />
+      {
+        mode === "category" ? <CategoryOperations category={{ id: post.id, title: post.title }} /> : <PostOperations post={{ id: post.id, title: post.title }} />
+      }
     </div>
   )
 }

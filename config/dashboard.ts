@@ -18,11 +18,11 @@ export const dashboardConfig: DashboardConfig = {
       href: "/dashboard",
       icon: "post",
     },
-    // {
-    //   title: "Billing",
-    //   href: "/dashboard/billing",
-    //   icon: "billing",
-    // },
+    {
+      title: "Categories",
+      href: "/dashboard/categories",
+      icon: "category",
+    },
     {
       title: "Settings",
       href: "/dashboard/settings",

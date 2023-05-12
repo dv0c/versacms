@@ -63,13 +63,26 @@ model VerificationToken {
 }
 
 model Post {
-  id       String @id @map("_id")
-  authorId String @db.ObjectId
+  id         String   @id @map("_id")
+  authorId   String   @db.ObjectId
+  categoryId String[]
+
+  title      String
+  content    Json?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  published  Boolean    @default(false)
+  author     User       @relation(fields: [authorId], references: [id])
+  categories Category[] @relation(fields: [categoryId], references: [id])
+}
+
+model Category {
+  id     String   @id @map("_id")
+  postId String[]
 
   title     String
-  content   Json?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
+  posts     Post[]   @relation(fields: [postId], references: [id])
 }
