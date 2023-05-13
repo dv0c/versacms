@@ -18,7 +18,7 @@ export async function GET() {
 
         if (!session) return new Response("Unauthorized", { status: 403 })
 
-        // const { user } = session
+        const { user } = session
 
         const posts = await db.post.findMany({
             select: {
@@ -26,19 +26,19 @@ export async function GET() {
                 title: true,
                 published: true,
                 createdAt: true,
-                author: {
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                        image: true,
-                        role: true,
-                    }
-                },
+                // author: {
+                //     select: {
+                //         id: true,
+                //         name: true,
+                //         email: true,
+                //         image: true,
+                //         role: true,
+                //     }
+                // },
             },
-            // where: {
-            //     authorId: user?.id,
-            // },
+            where: {
+                authorId: user?.id,
+            },
         })
 
 
