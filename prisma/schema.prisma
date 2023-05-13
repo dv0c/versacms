@@ -11,18 +11,19 @@ datasource db {
 }
 
 model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
   name           String
   image          String?
-  email          String?   @unique
+  email          String?    @unique
   emailVerified  DateTime?
   hashedPassword String?
-  createdAt      DateTime  @default(now())
-  updateAt       DateTime  @updatedAt
-  role           String    @default("user")
+  createdAt      DateTime   @default(now())
+  updateAt       DateTime   @updatedAt
+  role           String     @default("user")
   sessions       Session[]
   accounts       Account[]
   Post           Post[]
+  Category       Category[]
 }
 
 model Account {
@@ -77,12 +78,14 @@ model Post {
 }
 
 model Category {
-  id     String   @id @map("_id")
-  postId String[]
+  id       String   @id @map("_id")
+  authorId String   @db.ObjectId
+  postId   String[]
 
   title     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id])
   posts     Post[]   @relation(fields: [postId], references: [id])
 }

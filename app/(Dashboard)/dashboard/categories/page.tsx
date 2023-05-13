@@ -20,6 +20,16 @@ export default async function Categories() {
             title: true,
             published: true,
             createdAt: true,
+            updatedAt: true,
+            author: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    image: true,
+                    role: true,
+                },
+            },
         },
         orderBy: {
             updatedAt: "desc",

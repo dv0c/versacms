@@ -34,9 +34,11 @@ export async function GET() {
 
 export async function POST(req: Request) {
     try {
-        // const session = await getServerSession(authOptions)
+        const session = await getServerSession(authOptions)
 
-        // if (!session) return new Response("Unauthorized", { status: 403 })
+        if (!session) return new Response("Unauthorized", { status: 403 })
+
+        const { user } = session
 
         const json = await req.json()
         const body = categoryCreateSchema.parse(json)
@@ -45,7 +47,7 @@ export async function POST(req: Request) {
             data: {
                 id: uuid(),
                 title: body.title,
-                // authorId: user?.id || "",
+                authorId: user?.id || "",
             },
             select: {
                 id: true,
