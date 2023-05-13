@@ -1,13 +1,13 @@
 import Link from "next/link"
-import { Post } from "@prisma/client"
 
 import { formatDate } from "@/libs/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { PostOperations } from "@/components/post-operations"
 import { CategoryOperations } from "./category-operations"
+import { UserAvatar } from "./user-avatar"
 
 interface PostItemProps {
-  post: Pick<Post, "id" | "title" | "published" | "createdAt">,
+  post: any,
   mode?: string
 }
 
@@ -19,7 +19,17 @@ export function PostItem({ post, mode }: PostItemProps) {
           href={`/editor/${post.id}`}
           className="font-semibold hover:underline"
         >
-          {post.title}
+          <div className="gap-3 flex items-center">
+            <div className="select-none">
+              <div>
+                <UserAvatar
+                  user={{ name: post.author?.username || null, image: post.author?.image || null }}
+                  className="h-5 w-5"
+                />
+              </div>
+            </div>
+            {post.title}
+          </div>
         </Link>
         <div>
           <p className="text-sm text-muted-foreground">

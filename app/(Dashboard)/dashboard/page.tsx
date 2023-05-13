@@ -16,14 +16,23 @@ export default async function Dashboard() {
     }
 
     const posts = await db.post.findMany({
-        where: {
-            authorId: user.id,
-        },
+        // where: {
+        //     authorId: user.id,
+        // },
         select: {
             id: true,
             title: true,
             published: true,
             createdAt: true,
+            author: {
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    image: true,
+                    role: true,
+                }
+            },
         },
         orderBy: {
             updatedAt: "desc",

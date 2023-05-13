@@ -9,6 +9,16 @@ export async function POST(
     const { email, name, password } = body;
     const hashedPassword = await bcrypt.hash(password, 12);
 
+    if (!email) return NextResponse.json('Email is required');
+    
+    const EmailValidate = await db.user.findUnique({
+        where: {
+            email
+        }
+    })
+
+    if (EmailValidate) return NextResponse.json('Email already exists');
+
     const user = await db.user.create({
         data: {
             email,

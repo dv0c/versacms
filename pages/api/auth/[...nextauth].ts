@@ -21,10 +21,10 @@ export const authOptions: AuthOptions = {
         CredentialsProvider({
             name: "credentials",
             credentials: {
-                email: { label: "Email", type: "text" },
-                password: { label: "Password", type: "password" }
+                email: { type: "email" },
+                password: { type: "password" }
             },
-            async authorize(credentials) {
+            async authorize(credentials) {                
                 if (!credentials?.email || !credentials?.password) throw new Error('Invalid credentials')
 
                 const user = await db.user.findUnique({

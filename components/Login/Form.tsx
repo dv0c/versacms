@@ -1,12 +1,36 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client'
+
 import { Command } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { AiFillGithub as Github } from "react-icons/ai"
 import { signIn } from 'next-auth/react'
+import { useCallback, useState } from "react"
+import { Icons } from "../icons"
 
 const Form = () => {
+
+    const [email, setEmail] = useState('');
+    const [pass, setPass] = useState('');
+    const [isLoading, setIsLoading] = useState<any>(false);
+    const [gitLoading, setGitLoading] = useState<any>(false);
+
+    const login = useCallback(async () => {
+        console.log(email, pass);
+        try {
+            setIsLoading(true);
+            await signIn('credentials', {
+                email,
+                password: pass,
+                callbackUrl: '/dashboard'
+            });
+
+        } catch (error) {
+            console.error(error);
+            setIsLoading(false);
+        }
+    }, [email, pass]);
 
     return (
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
@@ -18,8 +42,12 @@ const Form = () => {
             <div className="grid gap-6">
                 <form>
                     <div className="grid gap-2">
-                        <Input placeholder="name@example.com" type="email" />
-                        <Button>Sign In with Email</Button>
+                        <Input onChange={(e) => setEmail(e.target.value)} value={email} placeholder="name@example.com" type="email" />
+                        <Input onChange={(e) => setPass(e.target.value)} value={pass} placeholder="password" type="password" />
+                        <Button disabled={!email || !pass || isLoading} type="submit" className="flex gap-2" onClick={login}>
+                            {isLoading && <Icons.spinner size={18} className="animate-spin" />}
+                            Sign In
+                        </Button>
                     </div>
                 </form>
             </div>
@@ -31,7 +59,11 @@ const Form = () => {
                     <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
                 </div>
             </div>
-            <Button variant={'outline'} className="gap-2" onClick={() => signIn('github', { callbackUrl: '/' })}>
+            <Button disabled={gitLoading} variant={'outline'} className="gap-2" onClick={() => {
+                setGitLoading(true)
+                signIn('github', { callbackUrl: '/' })
+            }}>
+                {gitLoading && <Icons.spinner size={18} className="animate-spin" />}
                 <Github size={17} />
                 Github
             </Button>

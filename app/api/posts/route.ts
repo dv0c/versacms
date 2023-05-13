@@ -1,4 +1,4 @@
-import { uuid } from '@/libs/utils'  
+import { uuid } from '@/libs/utils'
 
 import { getServerSession } from "next-auth/next"
 import * as z from "zod"
@@ -18,18 +18,29 @@ export async function GET() {
 
         if (!session) return new Response("Unauthorized", { status: 403 })
 
-        const { user } = session
+        // const { user } = session
+
         const posts = await db.post.findMany({
             select: {
                 id: true,
                 title: true,
                 published: true,
                 createdAt: true,
+                author: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        image: true,
+                        role: true,
+                    }
+                },
             },
-            where: {
-                authorId: user?.id,
-            },
+            // where: {
+            //     authorId: user?.id,
+            // },
         })
+
 
         return new Response(JSON.stringify(posts))
     } catch (error) {
