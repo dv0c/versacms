@@ -8,7 +8,7 @@ import { CategoryOperations } from "./category-operations"
 
 interface PostItemProps {
   post: Pick<Post, "id" | "title" | "published" | "createdAt">,
-  mode: string
+  mode?: string
 }
 
 export function PostItem({ post, mode }: PostItemProps) {

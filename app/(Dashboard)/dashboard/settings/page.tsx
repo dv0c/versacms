@@ -1,18 +1,33 @@
 import { DashboardHeader } from "@/components/header"
-import { PostCreateButton } from "@/components/post-create-button"
 import { DashboardShell } from "@/components/shell"
+import { getCurrentUser } from "@/libs/session"
+import { redirect } from "next/navigation"
+import { authOptions } from "@/pages/api/auth/[...nextauth]"
+import { UserNameForm } from "@/components/user-name-form"
 
 export const metadata = {
-    title: 'Sparkle Press | Settings',
-    description: 'Sparkle Press Settings Page',
+    title: "Settings",
+    description: "Manage account and website settings.",
 }
 
 
-export default function Settings() {
+export default async function SettingsPage() {
+
+    const user = await getCurrentUser()
+
+    if (!user) {
+        redirect(authOptions?.pages?.signIn || "/login")
+    }
+
     return (
         <DashboardShell>
-            <DashboardHeader heading="Settings" text="Manage account and website settings.">
-            </DashboardHeader>
+            <DashboardHeader
+                heading="Settings"
+                text="Manage account and website settings."
+            />
+            <div className="grid gap-10">
+                <UserNameForm user={{ id: user.id, name: user.name || "" }} />
+            </div>
         </DashboardShell>
     )
 }

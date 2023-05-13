@@ -28,27 +28,27 @@ export default async function Categories() {
 
     return (
         <DashboardShell>
-        <DashboardHeader heading="Categories" text="Create and manage categories.">
-            <PostCreateButton mode={"category"} name="Create Category" />
-        </DashboardHeader>
-        <div>
-            {categories?.length ? (
-                <div className="divide-y divide-border rounded-md border">
-                    {categories.map((post) => (
-                        <PostItem mode="category" key={post.id} post={post} />
-                    ))}
-                </div>
-            ) : (
-                <EmptyPlaceholder>
-                    <EmptyPlaceholder.Icon name="post" />
-                    <EmptyPlaceholder.Title>No categories created</EmptyPlaceholder.Title>
-                    <EmptyPlaceholder.Description>
-                        There is no categories yet. Start creating content.
-                    </EmptyPlaceholder.Description>
-                    <PostCreateButton variant="outline" />
-                </EmptyPlaceholder>
-            )}
-        </div>
-    </DashboardShell>
+            <DashboardHeader heading="Categories" text="Create and manage categories.">
+                <PostCreateButton mode={"category"} name="Create Category" />
+            </DashboardHeader>
+            <div>
+                {categories?.length ? (
+                    <div className="divide-y divide-border rounded-md border">
+                        {categories.map((post) => (
+                            <PostItem mode="category" key={post.id} post={post} />
+                        ))}
+                    </div>
+                ) : (
+                    <EmptyPlaceholder>
+                        <EmptyPlaceholder.Icon name="post" />
+                        <EmptyPlaceholder.Title>No categories created</EmptyPlaceholder.Title>
+                        <EmptyPlaceholder.Description>
+                            There is no categories yet. Start creating content.
+                        </EmptyPlaceholder.Description>
+                        <PostCreateButton mode={"category"} name="Create Category" variant="outline" />
+                    </EmptyPlaceholder>
+                )}
+            </div>
+        </DashboardShell>
     )
 }
