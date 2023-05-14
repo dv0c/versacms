@@ -15,6 +15,14 @@ async function getPostForUser(postId: Post["id"], userId: User["id"]) {
     })
 }
 
+async function getAdminPost(postId: Post["id"]) {
+    return await db.post.findFirst({
+        where: {
+            id: postId,
+        },
+    })
+}
+
 interface EditorPageProps {
     params: { postId: string }
 }
@@ -26,12 +34,8 @@ export default async function EditorPage({ params }: EditorPageProps) {
 
     let post: any
 
-    if (user.role === "admin") {
-        post = await db.post.findFirst({
-            where: {
-                id: params.postId,
-            }
-        })
+    if (user.role === "Administraotr" || user.role === "Author") {
+        post = await getAdminPost(params.postId)
     } else {
         post = await getPostForUser(params.postId, user.id)
     }
