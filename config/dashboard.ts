@@ -24,6 +24,11 @@ export const dashboardConfig: DashboardConfig = {
       icon: "category",
     },
     {
+      title: "Api keys",
+      href: "/dashboard/api",
+      icon: "key",
+    },
+    {
       title: "Settings",
       href: "/dashboard/settings",
       icon: "settings",
