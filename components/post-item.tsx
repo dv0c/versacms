@@ -16,8 +16,8 @@ export function PostItem({ post, mode }: PostItemProps) {
     <div className="flex items-center justify-between p-4">
       <div className="grid gap-1">
         <Link
-          href={`/editor/${post.id}`}
-          className="font-semibold hover:underline"
+          href={mode === "category" ? `/dashboard/categories` : `/post/${post.id}`}
+          className={`font-semibold ${mode !== "category" && 'hover:underline'} `}
         >
           <div className="gap-3 flex items-center">
             <div className="select-none">
@@ -54,3 +54,4 @@ PostItem.Skeleton = function PostItemSkeleton() {
     </div>
   )
 }
+
