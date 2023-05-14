@@ -24,9 +24,17 @@ export default async function EditorPage({ params }: EditorPageProps) {
 
     if (!user) redirect(authOptions?.pages?.signIn || "/")
 
-    const post = await getPostForUser(params.postId, user.id)
+    let post: any
 
-    
+    if (user.role === "admin") {
+        post = await db.post.findFirst({
+            where: {
+                id: params.postId,
+            }
+        })
+    } else {
+        post = await getPostForUser(params.postId, user.id)
+    }
 
     if (!post) notFound()
 
