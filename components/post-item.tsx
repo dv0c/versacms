@@ -16,7 +16,7 @@ export function PostItem({ post, mode }: PostItemProps) {
     <div className="flex items-center justify-between p-4">
       <div className="grid gap-1">
         <Link
-          href={mode === "category" ? `/dashboard/categories` : `/post/${post.id}`}
+          href={mode === "category" ? `/dashboard/categories` : `/editor/${post.id}`}
           className={`font-semibold ${mode !== "category" && 'hover:underline'} `}
         >
           <div className="gap-3 flex items-center">

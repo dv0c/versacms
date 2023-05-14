@@ -19,15 +19,15 @@ interface EditorPageProps {
     params: { postId: string }
 }
 
-export default async function EditorPage({ params }: EditorPageProps) {     
+export default async function EditorPage({ params }: EditorPageProps) {
     const user = await getCurrentUser()
-    
-    if (!user) {
-        redirect(authOptions?.pages?.signIn || "/")
-    }
-    
+
+    if (!user) redirect(authOptions?.pages?.signIn || "/")
+
     const post = await getPostForUser(params.postId, user.id)
+
     
+
     if (!post) notFound()
 
     return (
