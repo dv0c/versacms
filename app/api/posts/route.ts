@@ -6,17 +6,20 @@ import * as z from "zod"
 
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { db } from '@/libs/prismadb'
+import { NextRequest } from 'next/server';
 
 const postCreateSchema = z.object({
     title: z.string(),
     content: z.string().optional(),
 })
 
-export async function GET() {
+export async function GET(req: NextRequest) {
     try {
         const session = await getServerSession(authOptions)
 
         if (!session) return new Response("Unauthorized", { status: 403 })
+
+        const content = req.nextUrl.searchParams.get("content");
 
         const { user } = session
 
@@ -41,6 +44,20 @@ export async function GET() {
             },
         })
 
+        const contentPost = await db.post.findMany({
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                published: true,
+                createdAt: true,
+            },
+            where: {
+                authorId: user?.id,
+            },
+        })
+
+        if (content === "true") return new Response(JSON.stringify(contentPost))
 
         return new Response(JSON.stringify(posts))
     } catch (error) {
@@ -48,7 +65,7 @@ export async function GET() {
     }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: Request,) {
     try {
         const session = await getServerSession(authOptions)
 

@@ -15,29 +15,54 @@ export default async function Dashboard() {
         return notFound()
     }
 
-    const posts = await db.post.findMany({
-        // where: {
-        //     authorId: user.id,
-        // },
-        select: {
-            id: true,
-            title: true,
-            published: true,
-            createdAt: true,
-            author: {
-                select: {
-                    id: true,
-                    name: true,
-                    email: true,
-                    image: true,
-                    role: true,
-                }
+    let posts: any;
+
+    if (user.role === "administrator") {
+        posts = await db.post.findMany({
+            select: {
+                id: true,
+                title: true,
+                published: true,
+                createdAt: true,
+                author: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        image: true,
+                        role: true,
+                    }
+                },
             },
-        },
-        orderBy: {
-            updatedAt: "desc",
-        },
-    })
+            orderBy: {
+                updatedAt: "desc",
+            },
+        })
+    } else {
+        posts = await db.post.findMany({
+            where: {
+                authorId: user.id,
+            },
+            select: {
+                id: true,
+                title: true,
+                published: true,
+                createdAt: true,
+                author: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        image: true,
+                        role: true,
+                    }
+                },
+            },
+            orderBy: {
+                updatedAt: "desc",
+            },
+        })
+    }
 
     return (
         <DashboardShell>
