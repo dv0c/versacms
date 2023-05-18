@@ -89,3 +89,11 @@ model Category {
   author    User     @relation(fields: [authorId], references: [id])
   posts     Post[]   @relation(fields: [postId], references: [id])
 }
+
+model Api {
+  id        String   @id @map("_id")
+  name      String   @unique
+  requests  Int
+  limit     Int
+  createdAt DateTime @default(now())
+}

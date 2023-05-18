@@ -19,6 +19,16 @@ export async function GET(req: NextRequest) {
 
         if (!session) return new Response("Unauthorized", { status: 403 })
 
+        const token = await db.api.findUnique({
+            where: {
+                name: req.headers.get("Authorization")?.split(" ")[1]
+            }
+        })
+
+        console.log(req.headers.get("x-api-key")?.split(" ")[1]);
+        
+        if (!token) return new Response("Unauthorized", { status: 403 })
+
         const content = req.nextUrl.searchParams.get("content");
 
         const { user } = session
