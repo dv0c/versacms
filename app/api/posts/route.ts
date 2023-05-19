@@ -13,6 +13,17 @@ const postCreateSchema = z.object({
     content: z.string().optional(),
 })
 
+async function limitUpdate(token: string, requests: number) {
+    await db.api.update({
+        where: {
+            name: token
+        },
+        data: {
+            requests: requests + 1
+        }
+    })
+}
+
 export async function GET(req: NextRequest) {
     try {
         const session = await getServerSession(authOptions)
@@ -22,19 +33,27 @@ export async function GET(req: NextRequest) {
         if (!req.headers.has("sparkle-press") && !req.nextUrl.searchParams.has("api")) return new Response("API key is missing!", { status: 403 })
 
         const token = await db.api.findUnique({
+            select: {
+                name: true,
+                requests: true,
+                limit: true
+            },
             where: {
                 name: req.headers.get("sparkle-press")?.split(" ")[0] || req.nextUrl.searchParams.get("api")?.toString()
             }
         })
 
-        if (!token) return new Response("API key is invalid", { status: 403 })
 
-        if (!session && !token) return new Response("Unauthorized", { status: 403 })
+        if (!token?.name) return new Response("API key is invalid", { status: 403 })
+
+        if (!session && !token?.name) return new Response("Unauthorized", { status: 403 })
+
+        if (token.limit === token.requests) return new Response("API limit reached", { status: 403 })
 
         // Access without session
         // return posts only if available to public api (where api == true)
 
-        if (token && !session) {
+        if (token.name && !session) {
             const posts = await db.post.findMany({
                 select: {
                     id: true,
@@ -46,6 +65,9 @@ export async function GET(req: NextRequest) {
                     api: true
                 }
             })
+
+            limitUpdate(token.name, token.requests);
+
             return new Response(JSON.stringify(posts))
         }
 
@@ -98,6 +120,8 @@ export async function GET(req: NextRequest) {
             })
 
             if (content === "true") return new Response(JSON.stringify(contentPost))
+
+            limitUpdate(token.name, token.requests);
 
             return new Response(JSON.stringify(posts))
         }
