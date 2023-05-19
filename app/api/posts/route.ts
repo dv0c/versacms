@@ -17,61 +17,92 @@ export async function GET(req: NextRequest) {
     try {
         const session = await getServerSession(authOptions)
 
-        if (!session) return new Response("Unauthorized", { status: 403 })
+        // Validations
+
+        if (!req.headers.has("sparkle-press") && !req.nextUrl.searchParams.has("api")) return new Response("API key is missing!", { status: 403 })
 
         const token = await db.api.findUnique({
             where: {
-                name: req.headers.get("Authorization")?.split(" ")[1]
+                name: req.headers.get("sparkle-press")?.split(" ")[0] || req.nextUrl.searchParams.get("api")?.toString()
             }
         })
 
-        console.log(req.headers.get("x-api-key")?.split(" ")[1]);
-        
-        if (!token) return new Response("Unauthorized", { status: 403 })
+        if (!token) return new Response("API key is invalid", { status: 403 })
 
-        const content = req.nextUrl.searchParams.get("content");
+        if (!session && !token) return new Response("Unauthorized", { status: 403 })
 
-        const { user } = session
+        // Access without session
+        // return posts only if available to public api (where api == true)
 
-        const posts = await db.post.findMany({
-            select: {
-                id: true,
-                title: true,
-                published: true,
-                createdAt: true,
-                // author: {
-                //     select: {
-                //         id: true,
-                //         name: true,
-                //         email: true,
-                //         image: true,
-                //         role: true,
-                //     }
-                // },
-            },
-            where: {
-                authorId: user?.id,
-            },
-        })
+        if (token && !session) {
+            const posts = await db.post.findMany({
+                select: {
+                    id: true,
+                    title: true,
+                    published: true,
+                    createdAt: true,
+                },
+                where: {
+                    api: true
+                }
+            })
+            return new Response(JSON.stringify(posts))
+        }
 
-        const contentPost = await db.post.findMany({
-            select: {
-                id: true,
-                title: true,
-                content: true,
-                published: true,
-                createdAt: true,
-            },
-            where: {
-                authorId: user?.id,
-            },
-        })
+        // Access with session
+        // return posts of the user based on user id
+        // use if only to fix typescript error its just a quick fix
 
-        if (content === "true") return new Response(JSON.stringify(contentPost))
+        // TODO better implementation to this code
 
-        return new Response(JSON.stringify(posts))
-    } catch (error) {
-        return new Response(null, { status: 500 })
+        if (session) {
+            const content = req.nextUrl.searchParams.get("content");
+
+            const { user } = session
+
+            const posts = await db.post.findMany({
+                select: {
+                    id: true,
+                    title: true,
+                    published: true,
+                    createdAt: true,
+                    // author: {
+                    //     select: {
+                    //         id: true,
+                    //         name: true,
+                    //         email: true,
+                    //         image: true,
+                    //         role: true,
+                    //     }
+                    // },
+                },
+                where: {
+                    authorId: user?.id,
+                },
+            })
+
+            // return posts with content inside
+            // need to include ?content=true in the url to get the content of the post
+
+            const contentPost = await db.post.findMany({
+                select: {
+                    id: true,
+                    title: true,
+                    content: true,
+                    published: true,
+                    createdAt: true,
+                },
+                where: {
+                    authorId: user?.id,
+                },
+            })
+
+            if (content === "true") return new Response(JSON.stringify(contentPost))
+
+            return new Response(JSON.stringify(posts))
+        }
+    } catch (error: any) {
+        return new Response(error.message, { status: 500 })
     }
 }
 
