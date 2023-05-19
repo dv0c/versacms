@@ -19,7 +19,7 @@
     "@editorjs/table": "^2.2.1",
     "@hookform/resolvers": "^3.1.0",
     "@next-auth/prisma-adapter": "^1.0.6",
-    "@prisma/client": "^4.14.0",
+    "@prisma/client": "^4.14.1",
     "@radix-ui/react-alert-dialog": "^1.0.3",
     "@radix-ui/react-avatar": "^1.0.2",
     "@radix-ui/react-dialog": "^1.0.3",

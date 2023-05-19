@@ -24,6 +24,7 @@ model User {
   accounts       Account[]
   Post           Post[]
   Category       Category[]
+  Api            Api[]
 }
 
 model Account {
@@ -92,9 +93,13 @@ model Category {
 }
 
 model Api {
-  id        String   @id @map("_id")
+  id       String @id @map("_id")
+  authorId String @db.ObjectId
+
   name      String   @unique
   requests  Int
   limit     Int
   createdAt DateTime @default(now())
+
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
