@@ -29,3 +29,8 @@ export function uuid() {
   }
   return uuid;
 }
+
+export function generateAPIKey() {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+  return Array.from({ length: 32 }, () => characters[Math.floor(Math.random() * characters.length)]).join('');
+}

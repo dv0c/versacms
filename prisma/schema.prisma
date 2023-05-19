@@ -93,12 +93,15 @@ model Category {
 }
 
 model Api {
-  id       String @id @map("_id")
-  authorId String @db.ObjectId
+  id       String  @id @map("_id")
+  authorId String  @db.ObjectId
+  model     String?
+  type     String  @default("free")
+  status   String  @default("Active")
 
   name      String   @unique
-  requests  Int
-  limit     Int
+  requests  Int      @default(0)
+  limit     Int      @default(200)
   createdAt DateTime @default(now())
 
   author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
