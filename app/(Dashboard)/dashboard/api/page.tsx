@@ -30,7 +30,7 @@ export default async function Page() {
 
     return (
         <DashboardShell>
-            <DashboardHeader heading="Api" text="Create and manage your api keys.">
+            <DashboardHeader heading="Api Keys" text="Create and manage your api keys.">
                 <ApiButton />
             </DashboardHeader>
             <div>
