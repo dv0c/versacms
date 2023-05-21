@@ -8,10 +8,7 @@ export async function POST() {
 
     if (!session) return new Response("Unauthorized", { status: 401 })
 
-    // TODO limit api creation for a user 
-
-
-    if ((await _APIUserCreationLimiter(session?.user?.id as string))) return new Response("Creation of api is not allowed, you have reached your api creation limit", { status: 429 })
+    if ((await _APIUserCreationLimiter(session?.user?.id as string)) >= 5) return new Response("Creation of api is not allowed, you have reached your api creation limit", { status: 429 })
 
     const api = await db.api.create({
         data: {
@@ -35,7 +32,11 @@ export async function GET() {
 
     if (!session) return new Response("Unauthorized", { status: 401 })
 
-    const api = await db.api.findMany({})
+    const api = await db.api.findMany({
+        select: {
+            name: true,
+        }
+    })
 
     return new Response(JSON.stringify(api))
 

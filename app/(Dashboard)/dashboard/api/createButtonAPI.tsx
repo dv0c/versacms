@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { Icons } from "@/components/icons";
 import { useRouter } from "next/navigation";
-
+import { toast } from "@/components/ui/use-toast";
+import axios from "axios";
 
 export function ApiButton() {
 
@@ -12,13 +13,24 @@ export function ApiButton() {
 
     const router = useRouter()
 
+
     const handleClick = async () => {
-        setLoading(true)
-        await fetch('/api/api', {
-            method: 'POST',
-        }).then(() => {
-            setLoading(false)
-            router.refresh()
+        const cc = await axios.get('/api/api').then(async (res:any) => {
+            if (res.data.length >= 5) {
+                toast({
+                    title: "Plan Limitation.",
+                    description: "You have reached the limit of 5 api keys.",
+                    variant: "destructive",
+                })
+            } else {
+                setLoading(true)
+                await fetch('/api/api', {
+                    method: 'POST',
+                }).then(() => {
+                    setLoading(false)
+                    router.refresh()
+                })
+            }
         })
     }
 

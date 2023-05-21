@@ -16,7 +16,7 @@ export default async function Page() {
 
     const data = await db.api.findMany({
         where: {
-            authorId: user?.id || ""
+            authorId: user?.id as string
         },
         select: {
             name: true,
@@ -25,8 +25,13 @@ export default async function Page() {
             status: true,
             model: true || "",
             id: true,
+        },
+        orderBy: {
+            createdAt: "desc",
         }
     })
+
+
 
     return (
         <DashboardShell>
