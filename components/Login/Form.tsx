@@ -63,8 +63,8 @@ const Form = () => {
                 setGitLoading(true)
                 signIn('github', { callbackUrl: '/' })
             }}>
-                {gitLoading && <Icons.spinner size={18} className="animate-spin" />}
-                <Github size={17} />
+                {gitLoading ? <Icons.spinner size={18} className="animate-spin" /> : <Github size={17} />}
+
                 Github
             </Button>
             <p className="px-8 text-center text-sm text-muted-foreground">
