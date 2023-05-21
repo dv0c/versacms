@@ -9,11 +9,15 @@ export async function POST() {
     if (!session) return new Response("Unauthorized", { status: 401 })
 
     // TODO limit api creation for a user 
+
+
+    if ((await _APIUserCreationLimiter(session?.user?.id as string))) return new Response("Creation of api is not allowed, you have reached your api creation limit", { status: 429 })
+
     const api = await db.api.create({
         data: {
             id: uuid(),
             name: generateAPIKey(),
-            authorId: session?.user?.id || "",
+            authorId: session?.user?.id as string,
             requests: 0,
             limit: 200,
         },
@@ -35,4 +39,14 @@ export async function GET() {
 
     return new Response(JSON.stringify(api))
 
+}
+
+async function _APIUserCreationLimiter(sid: string) {
+    const count = await db.api.count({
+        where: {
+            authorId: sid
+        }
+    })
+
+    return count
 }

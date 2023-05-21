@@ -21,7 +21,7 @@ export async function DELETE(
             return new Response(null, { status: 403 })
         }
 
-        // Delete the post.
+        // Delete the api.
         await db.api.delete({
             where: {
                 id: params.apiId as string,
@@ -43,7 +43,7 @@ async function verifyCurrentUserHasAccessToThisAPI(apiId: string) {
     const session = await getServerSession(authOptions)
     const count = await db.api.count({
         where: {
-            id: apiId,
+            id: apiId as string,
             authorId: session?.user?.id,
         },
     })

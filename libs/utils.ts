@@ -31,6 +31,11 @@ export function uuid() {
 }
 
 export function generateAPIKey() {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
-  return Array.from({ length: 32 }, () => characters[Math.floor(Math.random() * characters.length)]).join('');
+  const chars = 'AB_CDEFGHIJKLMNOPQRSTUV_WXYZabcdefghijklmnopqrstuvwxy_z0123456789-_';
+  const now = new Date();
+  let api = now.getTime().toString(32)
+  for (let i = 0; i < 24; i++) {
+    api += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return api;
 }

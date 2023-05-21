@@ -63,7 +63,7 @@ export const columns: ColumnDef<ApiKeys>[] = [
                             Copy API Key
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={async () => await fetch('/api/api/' + api.name, { method: "DELETE" })}>
+                        <DropdownMenuItem onClick={async () => await fetch('/api/api/' + api.id, { method: "DELETE" }).then(() => location.reload())}>
                             <span className="text-destructive cursor-pointer">Delete</span>
                         </DropdownMenuItem>
                     </DropdownMenuContent>

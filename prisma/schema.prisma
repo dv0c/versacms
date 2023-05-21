@@ -95,7 +95,7 @@ model Category {
 model Api {
   id       String  @id @map("_id")
   authorId String  @db.ObjectId
-  model     String?
+  model    String?
   type     String  @default("free")
   status   String  @default("Active")
 
