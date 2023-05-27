@@ -68,7 +68,7 @@ const Form = () => {
                 Github
             </Button>
             <p className="px-8 text-center text-sm text-muted-foreground">
-                <span className="hover:text-brand underline underline-offset-4 cursor-pointer">Don't have an account? Sign Up</span>
+                {/* <span className="hover:text-brand underline underline-offset-4 cursor-pointer">Don't have an account? Sign Up</span> */}
             </p>
         </div>
     );
