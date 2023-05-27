@@ -16,6 +16,7 @@ import { postPatchSchema } from "@/libs/validations/post"
 import { buttonVariants } from "@/components/ui/button"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
+import EditorMenu from "./EditorMenu"
 
 interface EditorProps {
   post: Pick<Post, "id" | "title" | "content" | "published">
@@ -73,6 +74,18 @@ export function Editor({ post }: EditorProps) {
   }, [])
 
   React.useEffect(() => {
+    const handleContextMenu = (e: any) => {
+      // prevent the right-click menu from appearing
+      e.preventDefault()
+    }
+    document.addEventListener("contextmenu", handleContextMenu)
+
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu)
+    }
+  }, [])
+
+  React.useEffect(() => {
     if (isMounted) {
       initializeEditor()
 
@@ -120,6 +133,7 @@ export function Editor({ post }: EditorProps) {
     return null
   }
 
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid w-full gap-10">
@@ -138,12 +152,15 @@ export function Editor({ post }: EditorProps) {
               {post.published ? "Published" : "Draft"}
             </p>
           </div>
-          <button type="submit" className={cn(buttonVariants())}>
-            {isSaving && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            <span>Save</span>
-          </button>
+          <div className="flex gap-2 items-center">
+            <button type="submit" className={cn(buttonVariants())}>
+              {isSaving && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              <span>Save</span>
+            </button>
+            <EditorMenu />
+          </div>
         </div>
         <div className="prose prose-stone mx-auto w-[800px] dark:prose-invert">
           <TextareaAutosize

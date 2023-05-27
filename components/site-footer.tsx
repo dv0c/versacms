@@ -3,6 +3,7 @@ import * as React from "react"
 import { cn } from "@/libs/utils"
 import { Icons } from "@/components/icons"
 import { ModeToggle } from "./mode-toggle"
+import { siteConfig } from "@/config/site"
 // import { ModeToggle } from "@/components/mode-toggle"
 
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
@@ -12,7 +13,7 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
         <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
           <Icons.logo />
           <p className="text-center text-sm leading-loose md:text-left">
-            Sparkle Press. All rights reserved.
+            {siteConfig.name}. All rights reserved.
           </p>
         </div>
         <ModeToggle />
