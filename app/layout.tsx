@@ -5,6 +5,7 @@ import "@/styles/globals.css"
 import { cn } from "@/libs/utils"
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
+import { siteConfig } from "@/config/site"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -17,8 +18,8 @@ const fontHeading = localFont({
 })
 
 export const metadata = {
-  title: 'Sparkle Press | Dashboard - Auth',
-  description: 'Sparkle Press Dashboard Authentication',
+  title: siteConfig.name,
+  description: siteConfig.name + ' Dashboard Authentication',
 }
 
 export default function RootLayout({
