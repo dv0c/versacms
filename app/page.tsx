@@ -56,9 +56,7 @@ export default async function Home() {
             Features
           </h2>
           <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            This project is an experiment to see how a modern app, with features
-            like auth, subscriptions, API routes, and static pages would work in
-            Next.js 13 app dir.
+            Key Features of VersaCMS: Empowering Your Digital Presence
           </p>
         </div>
         <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
@@ -151,8 +149,8 @@ export default async function Home() {
         </div>
         <div className="mx-auto text-center md:max-w-[58rem]">
           <p className="leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            Taxonomy also includes a blog and a full-featured documentation site
-            built using Contentlayer and MDX.
+            VersaCMS also provides comprehensive analytics and reporting tools,
+            enabling users to track website traffic, visitor behavior, conversion rates, and other key metrics.
           </p>
         </div>
       </section>
