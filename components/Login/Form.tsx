@@ -61,7 +61,7 @@ const Form = () => {
             </div>
             <Button disabled={gitLoading} variant={'outline'} className="gap-2" onClick={() => {
                 setGitLoading(true)
-                signIn('github', { callbackUrl: '/' })
+                signIn('github', { callbackUrl: '/dashboard' })
             }}>
                 {gitLoading ? <Icons.spinner size={18} className="animate-spin" /> : <Github size={17} />}
 

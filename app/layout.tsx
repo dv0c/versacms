@@ -8,37 +8,37 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { siteConfig } from "@/config/site"
 
 const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
+    subsets: ["latin"],
+    variable: "--font-sans",
 })
 
 const fontHeading = localFont({
-  src: "../assets/fonts/CalSans-SemiBold.woff2",
-  variable: "--font-heading",
+    src: "../assets/fonts/CalSans-SemiBold.woff2",
+    variable: "--font-heading",
 })
 
 export const metadata = {
-  title: siteConfig.name,
-  description: siteConfig.name + ' Dashboard Authentication',
+    title: siteConfig.name,
+    description: siteConfig.name + ' Dashboard Authentication',
 }
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode,
+    children: React.ReactNode,
 }) {
-  return (
-    <html lang="en" >
-      <body className={cn(
-        "min-h-screen bg-background font-sans antialiased",
-        fontSans.variable,
-        fontHeading.variable
-      )}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-          <Toaster />
-        </ThemeProvider>
-      </body>
-    </html>
-  )
+    return (
+        <html lang="en" >
+            <body className={cn(
+                "min-h-screen bg-background font-sans antialiased",
+                fontSans.variable,
+                fontHeading.variable
+            )}>
+                <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+                    {children}
+                    <Toaster />
+                </ThemeProvider>
+            </body>
+        </html>
+    )
 }

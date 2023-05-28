@@ -15,11 +15,6 @@ export default async function DashboardLayout({ children, }: { children: React.R
 
     const user = await getCurrentUser();
 
-    if (!user) {
-        return notFound()
-    }
-
-
     return (
         <div className="flex min-h-screen flex-col space-y-6">
             <SiteHeader user={user} />

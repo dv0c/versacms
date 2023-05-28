@@ -3,11 +3,11 @@ import { SiteConfig } from "@/types/index"
 export const siteConfig: SiteConfig = {
     name: "VersaCMS",
     description:
-        "An open source application built using the new router, server components and everything new in Next.js 13.",
-    url: "https://tx.shadcn.com",
+        "VersaCMS: Empowering effortless content management for stunning websites and online stores",
+    url: "https://versacms.vercel.app",
     ogImage: "https://tx.shadcn.com/og.jpg",
     links: {
-        twitter: "https://twitter.com/shadcn",
-        github: "https://github.com/shadcn/taxonomy",
+        twitter: "https://twitter.com/",
+        github: "https://github.com/dv0c",
     },
 }
