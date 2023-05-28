@@ -1,6 +1,4 @@
 import Form from "@/components/Login/Form"
-import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/libs/session";
 import { SiteFooter } from "@/components/site-footer";
 import Link from "next/link";
 import { cn } from "@/libs/utils";

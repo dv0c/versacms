@@ -8,8 +8,11 @@ import { AiFillGithub as Github } from "react-icons/ai"
 import { signIn } from 'next-auth/react'
 import { useCallback, useState } from "react"
 import { Icons } from "../icons"
+import { useSearchParams } from "next/navigation"
+import { toast } from "../ui/use-toast"
 
 const Form = () => {
+    const searchParams: any = useSearchParams();
 
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
@@ -27,10 +30,18 @@ const Form = () => {
             });
 
         } catch (error) {
-            console.error(error);
+            console.log(error);
             setIsLoading(false);
         }
     }, [email, pass]);
+
+    if (searchParams.has('error')) {
+        toast({
+            title: "Something went wrong.",
+            description: searchParams.get('error'),
+            variant: "destructive",
+        })
+    }
 
     return (
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">

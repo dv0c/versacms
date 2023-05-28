@@ -24,7 +24,7 @@ export const authOptions: AuthOptions = {
                 email: { type: "email" },
                 password: { type: "password" }
             },
-            async authorize(credentials) {                
+            async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) throw new Error('Invalid credentials')
 
                 const user = await db.user.findUnique({
@@ -60,6 +60,7 @@ export const authOptions: AuthOptions = {
     },
     pages: {
         signIn: '/login',
+        error: '/login'
     },
     debug: process.env.NODE_ENV === 'development',
     session: {
