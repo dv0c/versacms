@@ -14,7 +14,7 @@ export default async function Home() {
         <main className="h-full">
             <div className='pb-20 container flex h-screen w-screen flex-col items-center justify-center'>
                 <Form />
-                <SiteFooter className="w-full absolute bottom-0 border-t" />
+                <SiteFooter className="w-full hidden md:block absolute bottom-0 border-t" />
             </div>
         </main>
     )
