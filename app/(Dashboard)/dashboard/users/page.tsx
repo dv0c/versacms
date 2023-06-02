@@ -3,8 +3,31 @@ import { DashboardShell } from "@/components/shell";
 import { DataTable } from "./data-table";
 import { db } from "@/libs/prismadb";
 import { columns } from "./columns";
+import { getCurrentUser } from "@/libs/session";
+import { EmptyPlaceholder } from "@/components/empty-placeholder";
+import { Icons } from "@/components/icons";
 
 export default async function Users() {
+
+    const user = await getCurrentUser()
+
+    if (user?.role !== "administrator") {
+        return (
+            <DashboardShell>
+                <DashboardHeader heading="Users" text="Create and manage users.">
+                </DashboardHeader>
+                <div>
+                    <EmptyPlaceholder>
+                        <Icons.warning name="post" />
+                        <EmptyPlaceholder.Title>No Permission</EmptyPlaceholder.Title>
+                        <EmptyPlaceholder.Description>
+                            You do not have permission to view this page.
+                        </EmptyPlaceholder.Description>
+                    </EmptyPlaceholder>
+                </div>
+            </DashboardShell>
+        )
+    }
 
     const data = await db.user.findMany({
         select: {
