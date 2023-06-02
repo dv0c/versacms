@@ -28,13 +28,14 @@ const Form = () => {
                 password: pass,
                 callbackUrl: '/dashboard'
             });
-
+            
         } catch (error) {
             console.log(error);
             setIsLoading(false);
         }
     }, [email, pass]);
 
+    
     if (searchParams.has('error')) {
         toast({
             title: "Something went wrong.",
