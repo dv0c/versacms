@@ -54,7 +54,6 @@ export const authOptions: AuthOptions = {
         jwt: async ({ user, token }) => {
             if (user) {
                 token.uid = user.id;
-                token.role = getUserRole(user)
             }
             return token;
         },
@@ -69,18 +68,6 @@ export const authOptions: AuthOptions = {
     },
     secret: process.env.NEXTAUTH_SECRET,
 
-}
-
-async function getUserRole(user: any) {
-    const role = await db.user.findUnique({
-        where: {
-            id: user.id
-        },
-        select: {
-            role: true
-        }
-    })
-    return role;
 }
 
 
