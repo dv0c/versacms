@@ -6,6 +6,7 @@ import { PostCreateButton } from "@/components/post-create-button"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { db } from "@/libs/prismadb"
 import { PostItem } from "@/components/post-item"
+import { MobileNav } from "@/components/mobile-nav"
 
 export default async function Dashboard() {
 

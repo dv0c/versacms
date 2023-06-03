@@ -4,6 +4,7 @@ import { z } from "zod"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { db } from "@/libs/prismadb"
 import { userNameSchema } from "@/libs/validations/user"
+import { getCurrentUser } from "@/libs/session"
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -36,6 +37,41 @@ export async function PATCH(
       },
       data: {
         name: payload.name,
+      },
+    })
+
+    return new Response(null, { status: 200 })
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return new Response(JSON.stringify(error.issues), { status: 422 })
+    }
+
+    return new Response(null, { status: 500 })
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  context: z.infer<typeof routeContextSchema>
+) {
+
+  const { params } = routeContextSchema.parse(context)
+
+  try {
+    // Ensure user is authentication and has access to this user.
+    const session = await getCurrentUser()
+    if (session?.user.role !== 'administrator') {
+      return new Response(null, { status: 403 })
+    }
+
+    // Get the request body and validate it.
+    const body = await req.json()
+    const payload = userNameSchema.parse(body)
+
+    // delete the user.
+    await db.user.delete({
+      where: {
+        id: params.userId
       },
     })
 

@@ -6,6 +6,7 @@ import { columns } from "./columns";
 import { getCurrentUser } from "@/libs/session";
 import { EmptyPlaceholder } from "@/components/empty-placeholder";
 import { Icons } from "@/components/icons";
+import { CreateUserButton, DisabledCreateUserButton } from "./CreateUserButton";
 
 export default async function Users() {
 
@@ -15,6 +16,7 @@ export default async function Users() {
         return (
             <DashboardShell>
                 <DashboardHeader heading="Users" text="Create and manage users.">
+                    <DisabledCreateUserButton />
                 </DashboardHeader>
                 <div>
                     <EmptyPlaceholder>
@@ -47,6 +49,7 @@ export default async function Users() {
     return (
         <DashboardShell>
             <DashboardHeader heading="Users" text="Create and manage users.">
+                <CreateUserButton />
             </DashboardHeader>
             <div>
                 <DataTable columns={columns} data={data} />
