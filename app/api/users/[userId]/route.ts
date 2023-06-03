@@ -60,7 +60,8 @@ export async function DELETE(
   try {
     // Ensure user is authentication and has access to this user.
     const session = await getCurrentUser()
-    if (session?.user.role !== 'administrator') {
+
+    if (session?.role !== 'administrator') {
       return new Response(null, { status: 403 })
     }
 

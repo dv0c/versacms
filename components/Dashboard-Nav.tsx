@@ -1,7 +1,6 @@
 'use client'
 
 import { Icons } from "@/components/icons"
-import { getCurrentUser } from "@/libs/session";
 import { DashboardConfig } from "@/types/index";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,9 +13,7 @@ type Props = {
 const DashboardNav = (props: Props) => {
     const path = usePathname() || 'dashboard';
 
-    if (!props.items?.length) {
-        return null
-    }
+    if (!props.items?.length) return null
 
     const selectedRoute = path
 
@@ -27,7 +24,7 @@ const DashboardNav = (props: Props) => {
                 {props.items.map((i) => {
                     const Icon = Icons[i.icon || "arrowRight"]
                     return (
-                        <>
+                        <div key={i.title}>
                             {
                                 i.admin && props.user?.role !== 'administrator' ? null : <Link href={i.href || ""} key={i.title}>
                                     <span className={`${selectedRoute === i.href ? "bg-accent" : ""} group flex gap-2 items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground transparent`}>
@@ -36,7 +33,7 @@ const DashboardNav = (props: Props) => {
                                     </span>
                                 </Link>
                             }
-                        </>
+                        </div>
                     )
                 })}
             </nav>
