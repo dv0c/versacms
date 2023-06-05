@@ -31,3 +31,4 @@ export default async function SettingsPage() {
         </DashboardShell>
     )
 }
+export const dynamic = 'force-dynamic'

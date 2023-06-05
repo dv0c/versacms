@@ -4,6 +4,7 @@ import Link from "next/link";
 import { cn } from "@/libs/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
+import { Suspense } from "react";
 
 export default async function Login() {
 
@@ -22,9 +23,15 @@ export default async function Login() {
                 </>
             </Link>
             <div className='pb-20 container flex h-screen w-screen flex-col items-center justify-center'>
-                <Form />
+                <Suspense fallback={<FormFallback />}>
+                    <Form />
+                </Suspense>
                 <SiteFooter className="w-full hidden md:block absolute bottom-0 border-t" />
             </div>
         </main>
     )
+}
+
+function FormFallback() {
+    return <></>
 }

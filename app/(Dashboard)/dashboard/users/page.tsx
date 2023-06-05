@@ -57,3 +57,5 @@ export default async function Users() {
         </DashboardShell>
     )
 }
+
+export const dynamic = 'force-dynamic'

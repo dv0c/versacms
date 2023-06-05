@@ -91,3 +91,5 @@ export default async function Dashboard() {
         </DashboardShell>
     )
 }
+
+export const dynamic = 'force-dynamic'

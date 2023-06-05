@@ -48,9 +48,9 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
 
     const response = await fetch(`/api/users/${user.id}`, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
       body: JSON.stringify({
         name: data.name,
       }),

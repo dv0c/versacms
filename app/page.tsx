@@ -9,10 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 export default async function Home() {
 
   const user = await getCurrentUser()
-
-  console.log(user);
-
-
+  
   return (
     <>
       <SiteHeader user={user} />

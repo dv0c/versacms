@@ -62,3 +62,5 @@ export default async function Categories() {
         </DashboardShell>
     )
 }
+
+export const dynamic = 'force-dynamic'
