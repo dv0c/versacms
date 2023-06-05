@@ -98,8 +98,8 @@ export function SkeletonForm() {
             <div className="grid gap-6">
                 <form>
                     <div className="grid gap-2">
-                        <Skeleton className="w-full h-8" />
-                        <Skeleton className="w-full h-8" />
+                        <Skeleton className="w-full px-3 py-2 h-10" />
+                        <Skeleton className="w-full px-3 py-2 h-10" />
                         <Skeleton className="w-full h-10 py-2 px-4" />
                     </div>
                 </form>
