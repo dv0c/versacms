@@ -5,6 +5,7 @@ import { cn } from "@/libs/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default async function Login() {
 
@@ -35,7 +36,7 @@ export default async function Login() {
 function FormFallback() {
     return <>
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-
+            <Skeleton className="w-full h-[380px]" />
         </div>
     </>
 }
