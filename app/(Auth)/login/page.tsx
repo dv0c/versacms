@@ -1,11 +1,10 @@
-import Form from "@/components/Login/Form"
 import { SiteFooter } from "@/components/site-footer";
 import Link from "next/link";
 import { cn } from "@/libs/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Form, SkeletonForm } from "@/components/Login/Form";
 
 export default async function Login() {
 
@@ -24,19 +23,11 @@ export default async function Login() {
                 </>
             </Link>
             <div className='pb-20 container flex h-screen w-screen flex-col items-center justify-center'>
-                <Suspense fallback={<FormFallback />}>
+                <Suspense fallback={<SkeletonForm />}>
                     <Form />
                 </Suspense>
                 <SiteFooter className="w-full hidden md:block absolute bottom-0 border-t" />
             </div>
         </main>
     )
-}
-
-function FormFallback() {
-    return <>
-        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-            <Skeleton className="w-full h-[380px]" />
-        </div>
-    </>
 }
