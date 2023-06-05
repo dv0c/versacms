@@ -8,7 +8,7 @@ export async function POST(
 ) {
     const session = await getCurrentUser()
 
-    if (session.role !== 'administrator') return new Response('Unauthorized', { status: 401 })
+    if (session?.role !== 'administrator') return new Response('Unauthorized', { status: 401 })
 
     const body = await request.json();
     const { email, name, password } = body;
