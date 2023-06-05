@@ -23,9 +23,10 @@ export default async function Login() {
                 </>
             </Link>
             <div className='pb-20 container flex h-screen w-screen flex-col items-center justify-center'>
-                <Suspense fallback={<SkeletonForm />}>
+                {/* <Suspense fallback={<SkeletonForm />}>
                     <Form />
-                </Suspense>
+                </Suspense> */}
+                <SkeletonForm />
                 <SiteFooter className="w-full hidden md:block absolute bottom-0 border-t" />
             </div>
         </main>
