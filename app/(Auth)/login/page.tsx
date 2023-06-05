@@ -26,7 +26,6 @@ export default async function Login() {
                 <Suspense fallback={<SkeletonForm />}>
                     <Form />
                 </Suspense>
-                <SkeletonForm />
                 <SiteFooter className="w-full hidden md:block absolute bottom-0 border-t" />
             </div>
         </main>
