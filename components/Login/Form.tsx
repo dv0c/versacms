@@ -100,7 +100,7 @@ export function SkeletonForm() {
                     <div className="grid gap-2">
                         <Skeleton className="w-full h-8" />
                         <Skeleton className="w-full h-8" />
-                        <Skeleton className="w-full h-10" />
+                        <Skeleton className="w-full h-8" />
                     </div>
                 </form>
             </div>
@@ -112,7 +112,7 @@ export function SkeletonForm() {
                     <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
                 </div>
             </div>
-            <Skeleton className="w-full h-10" />
+            <Skeleton className="w-full h-8" />
             <p className="px-8 text-center text-sm text-muted-foreground">
                 {/* <span className="hover:text-brand underline underline-offset-4 cursor-pointer">Don't have an account? Sign Up</span> */}
             </p>
