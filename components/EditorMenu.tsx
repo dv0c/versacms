@@ -10,6 +10,8 @@ import {
 import { Button } from "./ui/button"
 import ImageUpload from "./image-upload"
 
+import AddCategory from "./ui/add-category"
+
 export default function EditorMenu() {
     return (
         <Sheet>
@@ -22,12 +24,15 @@ export default function EditorMenu() {
                 <SheetHeader>
                     <SheetTitle>Edit Your Post</SheetTitle>
                     <SheetDescription>
-                        Add more attributes to your post here.<br/><br/> There is not auto save feature so do not forget to save 
+                        Add more attributes to your post here.<br /><br /> There is not auto save feature so do not forget to save
                         your progress before you close the page!
                     </SheetDescription>
                 </SheetHeader>
                 <div className="mt-4">
                     <ImageUpload />
+                </div>
+                <div className="mt-3">
+                    <AddCategory id={''} />
                 </div>
             </SheetContent>
         </Sheet>

@@ -41,7 +41,7 @@ export default async function EditorPage({ params }: EditorPageProps) {
     }
 
     if (!post) notFound()
-    
+
     return (
         <Editor
             post={{

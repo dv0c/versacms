@@ -6,7 +6,6 @@ import { PostCreateButton } from "@/components/post-create-button"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { db } from "@/libs/prismadb"
 import { PostItem } from "@/components/post-item"
-import { MobileNav } from "@/components/mobile-nav"
 
 export default async function Dashboard() {
 
@@ -16,54 +15,57 @@ export default async function Dashboard() {
         return notFound()
     }
 
-    let posts: any;
-
-    if (user.role === "administrator") {
-        posts = await db.post.findMany({
-            select: {
-                id: true,
-                title: true,
-                published: true,
-                createdAt: true,
-                author: {
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                        image: true,
-                        role: true,
-                    }
+    const fetchPosts = async () => {
+        if (user.role === "administrator") {
+            return db.post.findMany({
+                select: {
+                    id: true,
+                    title: true,
+                    published: true,
+                    createdAt: true,
+                    author: {
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true,
+                            image: true,
+                            role: true,
+                        }
+                    },
                 },
-            },
-            orderBy: {
-                updatedAt: "desc",
-            },
-        })
-    } else {
-        posts = await db.post.findMany({
-            where: {
-                authorId: user.id,
-            },
-            select: {
-                id: true,
-                title: true,
-                published: true,
-                createdAt: true,
-                author: {
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                        image: true,
-                        role: true,
-                    }
+                orderBy: {
+                    updatedAt: "desc",
                 },
-            },
-            orderBy: {
-                updatedAt: "desc",
-            },
-        })
+            })
+        } else {
+            return db.post.findMany({
+                where: {
+                    authorId: user.id,
+                },
+                select: {
+                    id: true,
+                    title: true,
+                    published: true,
+                    createdAt: true,
+                    author: {
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true,
+                            image: true,
+                            role: true,
+                        }
+                    },
+                },
+                orderBy: {
+                    updatedAt: "desc",
+                },
+            })
+        };
     }
+
+    const posts = await fetchPosts();
+
 
     return (
         <DashboardShell>
@@ -91,5 +93,3 @@ export default async function Dashboard() {
         </DashboardShell>
     )
 }
-
-export const dynamic = 'force-dynamic'
