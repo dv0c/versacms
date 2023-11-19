@@ -71,6 +71,7 @@ model Post {
 
   title      String
   content    Json?
+  thumbnail  String?
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   published  Boolean    @default(false)

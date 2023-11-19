@@ -1,15 +1,15 @@
-import { getServerSession } from "next-auth"
-import * as z from "zod"
+import { getServerSession } from "next-auth";
+import * as z from "zod";
 
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { db } from "@/libs/prismadb"
-import { postPatchSchema } from "@/libs/validations/post"
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { db } from "@/libs/prismadb";
+import { postPatchSchema } from "@/libs/validations/post";
 
 const routeContextSchema = z.object({
   params: z.object({
     postId: z.string(),
   }),
-})
+});
 
 export async function DELETE(
   req: Request,
@@ -17,11 +17,11 @@ export async function DELETE(
 ) {
   try {
     // Validate the route params.
-    const { params } = routeContextSchema.parse(context)
+    const { params } = routeContextSchema.parse(context);
 
     // Check if the user has access to this post.
     if (!(await verifyCurrentUserHasAccessToPost(params.postId))) {
-      return new Response(null, { status: 403 })
+      return new Response(null, { status: 403 });
     }
 
     // Delete the post.
@@ -29,15 +29,15 @@ export async function DELETE(
       where: {
         id: params.postId as string,
       },
-    })
+    });
 
-    return new Response(null, { status: 204 })
+    return new Response(null, { status: 204 });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
+      return new Response(JSON.stringify(error.issues), { status: 422 });
     }
 
-    return new Response(null, { status: 500 })
+    return new Response(null, { status: 500 });
   }
 }
 
@@ -47,16 +47,16 @@ export async function PATCH(
 ) {
   try {
     // Validate route params.
-    const { params } = routeContextSchema.parse(context)
+    const { params } = routeContextSchema.parse(context);
 
     // Check if the user has access to this post.
     if (!(await verifyCurrentUserHasAccessToPost(params.postId))) {
-      return new Response(null, { status: 403 })
+      return new Response(null, { status: 403 });
     }
 
     // Get the request body and validate it.
-    const json = await req.json()
-    const body = postPatchSchema.parse(json)
+    const json = await req.json();
+    const body = postPatchSchema.parse(json);
 
     // Update the post.
     // TODO: Implement sanitization for content.
@@ -67,27 +67,28 @@ export async function PATCH(
       data: {
         title: body.title,
         content: body.content,
+        thumbnail: body.thumbnail,
       },
-    })
+    });
 
-    return new Response(null, { status: 200 })
+    return new Response(null, { status: 200 });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
+      return new Response(JSON.stringify(error.issues), { status: 422 });
     }
 
-    return new Response(null, { status: 500 })
+    return new Response(null, { status: 500 });
   }
 }
 
 async function verifyCurrentUserHasAccessToPost(postId: string) {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
   const count = await db.post.count({
     where: {
       id: postId,
-      authorId: session?.user?.id ,
+      authorId: session?.user?.id,
     },
-  })
+  });
 
-  return count > 0
+  return count > 0;
 }
