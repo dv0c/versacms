@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import EditorJS from "@editorjs/editorjs";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Post } from "@prisma/client";
+import { Category, Post } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
 import * as z from "zod";
@@ -19,7 +19,9 @@ import { Icons } from "@/components/icons";
 import EditorMenu from "./EditorMenu";
 
 interface EditorProps {
-  post: Post;
+  post: Post & {
+    Category: Category;
+  };
 }
 
 type FormData = z.infer<typeof postPatchSchema>;

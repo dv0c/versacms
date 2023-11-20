@@ -20,6 +20,9 @@ async function getAdminPost(postId: Post["id"]) {
     where: {
       id: postId,
     },
+    include: {
+      Category: true,
+    },
   });
 }
 

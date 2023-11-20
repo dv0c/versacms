@@ -70,32 +70,31 @@ model VerificationToken {
 }
 
 model Post {
-  id         String   @id @map("_id")
-  authorId   String   @db.ObjectId
-  categoryId String[]
+  id       String @id @map("_id")
+  authorId String @db.ObjectId
 
   title      String
   content    Json?
   thumbnail  String?
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  published  Boolean    @default(false)
-  api        Boolean    @default(false)
-  author     User       @relation(fields: [authorId], references: [id])
-  categories Category[] @relation(fields: [categoryId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  published  Boolean   @default(false)
+  api        Boolean   @default(false)
+  author     User      @relation(fields: [authorId], references: [id])
+  categoryId String?
+  Category   Category? @relation(fields: [categoryId], references: [id])
 }
 
 model Category {
-  id       String   @id @map("_id")
-  authorId String   @db.ObjectId
-  postId   String[]
+  id       String @id @map("_id")
+  authorId String @db.ObjectId
 
   title     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   published Boolean  @default(false)
   author    User     @relation(fields: [authorId], references: [id])
-  posts     Post[]   @relation(fields: [postId], references: [id])
+  posts     Post[]
 }
 
 model Api {

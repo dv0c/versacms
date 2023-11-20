@@ -68,6 +68,7 @@ export async function PATCH(
         title: body.title,
         content: body.content,
         thumbnail: body.thumbnail,
+        categoryId: body.CategoryId,
       },
     });
 

@@ -11,9 +11,15 @@ import { Button } from "./ui/button";
 import ImageUpload from "./image-upload";
 
 import AddCategory from "./ui/add-category";
-import { Post } from "@prisma/client";
+import { Category, Post } from "@prisma/client";
 
-export default function EditorMenu({ post }: { post: Post }) {
+export default function EditorMenu({
+  post,
+}: {
+  post: Post & {
+    Category: Category;
+  };
+}) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -31,7 +37,9 @@ export default function EditorMenu({ post }: { post: Post }) {
         <div className="mt-4">
           <ImageUpload post={post} />
         </div>
-        <div className="mt-3">{/* <AddCategory id={""} /> */}</div>
+        <div className="mt-3">
+          <AddCategory post={post} />
+        </div>
       </SheetContent>
     </Sheet>
   );
