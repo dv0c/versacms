@@ -39,8 +39,14 @@ export function Form() {
   useEffect(() => {
     if (searchParams.has("error")) {
       toast({
-        title: "Something went wrong.",
-        description: searchParams.get("error"),
+        title:
+          searchParams.get("error") === "OAuthAccountNotLinked"
+            ? "Account Linking error."
+            : "Something went wrong",
+        description:
+          searchParams.get("error") === "OAuthAccountNotLinked"
+            ? "You can't link your account with multiple providers."
+            : "Please try again later.",
         variant: "destructive",
       });
     }
