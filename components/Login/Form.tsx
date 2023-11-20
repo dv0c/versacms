@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AiOutlineGoogle, AiFillGithub as Github } from "react-icons/ai";
 import { signIn } from "next-auth/react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Icons } from "../icons";
 import { useSearchParams } from "next/navigation";
 import { toast } from "../ui/use-toast";
@@ -19,6 +19,7 @@ export function Form() {
   const [pass, setPass] = useState("");
   const [isLoading, setIsLoading] = useState<any>(false);
   const [gitLoading, setGitLoading] = useState<any>(false);
+  const [googleLoading, setGoogleLoading] = useState<any>(false);
 
   const login = useCallback(async () => {
     console.log(email, pass);
@@ -35,13 +36,15 @@ export function Form() {
     }
   }, [email, pass]);
 
-  if (searchParams.has("error")) {
-    toast({
-      title: "Something went wrong.",
-      description: searchParams.get("error"),
-      variant: "destructive",
-    });
-  }
+  useEffect(() => {
+    if (searchParams.has("error")) {
+      toast({
+        title: "Something went wrong.",
+        description: searchParams.get("error"),
+        variant: "destructive",
+      });
+    }
+  }, []);
 
   return (
     <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
@@ -97,7 +100,9 @@ export function Form() {
         className="gap-2"
         onClick={() => {
           setGitLoading(true);
-          signIn("github", { callbackUrl: "/dashboard" });
+          signIn("github", { callbackUrl: "/dashboard" }).then(() =>
+            setGoogleLoading(false)
+          );
         }}
       >
         {gitLoading ? (
@@ -108,15 +113,17 @@ export function Form() {
         Github
       </Button>
       <Button
-        disabled={gitLoading}
+        disabled={googleLoading}
         variant={"outline"}
         className="gap-2"
         onClick={() => {
-          setGitLoading(true);
-          signIn("google", { callbackUrl: "/dashboard" });
+          setGoogleLoading(true);
+          signIn("google", { callbackUrl: "/dashboard" }).then(() =>
+            setGoogleLoading(false)
+          );
         }}
       >
-        {gitLoading ? (
+        {googleLoading ? (
           <Icons.spinner size={18} className="animate-spin" />
         ) : (
           <AiOutlineGoogle size={17} />
