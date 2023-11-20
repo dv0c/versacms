@@ -100,42 +100,44 @@ export function Form() {
           </span>
         </div>
       </div>
-      <Button
-        disabled={gitLoading}
-        variant={"outline"}
-        className="gap-2"
-        onClick={() => {
-          setGitLoading(true);
-          signIn("github", { callbackUrl: "/dashboard" }).then(() =>
-            setGoogleLoading(false)
-          );
-        }}
-      >
-        {gitLoading ? (
-          <Icons.spinner size={18} className="animate-spin" />
-        ) : (
-          <Github size={17} />
-        )}
-        Github
-      </Button>
-      <Button
-        disabled={googleLoading}
-        variant={"outline"}
-        className="gap-2"
-        onClick={() => {
-          setGoogleLoading(true);
-          signIn("google", { callbackUrl: "/dashboard" }).then(() =>
-            setGoogleLoading(false)
-          );
-        }}
-      >
-        {googleLoading ? (
-          <Icons.spinner size={18} className="animate-spin" />
-        ) : (
-          <AiOutlineGoogle size={17} />
-        )}
-        Google
-      </Button>
+      <div className="flex flex-col gap-y-3">
+        <Button
+          disabled={gitLoading}
+          variant={"outline"}
+          className="gap-2"
+          onClick={() => {
+            setGitLoading(true);
+            signIn("github", { callbackUrl: "/dashboard" }).then(() =>
+              setGoogleLoading(false)
+            );
+          }}
+        >
+          {gitLoading ? (
+            <Icons.spinner size={18} className="animate-spin" />
+          ) : (
+            <Github size={17} />
+          )}
+          Github
+        </Button>
+        <Button
+          disabled={googleLoading}
+          variant={"outline"}
+          className="gap-2"
+          onClick={() => {
+            setGoogleLoading(true);
+            signIn("google", { callbackUrl: "/dashboard" }).then(() =>
+              setGoogleLoading(false)
+            );
+          }}
+        >
+          {googleLoading ? (
+            <Icons.spinner size={18} className="animate-spin" />
+          ) : (
+            <AiOutlineGoogle size={17} />
+          )}
+          Google
+        </Button>
+      </div>
       <p className="px-8 text-center text-sm text-muted-foreground">
         {/* <span className="hover:text-brand underline underline-offset-4 cursor-pointer">Don't have an account? Sign Up</span> */}
       </p>

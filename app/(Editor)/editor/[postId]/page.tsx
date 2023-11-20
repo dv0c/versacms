@@ -34,7 +34,7 @@ export default async function EditorPage({ params }: EditorPageProps) {
 
   let post: any;
 
-  if (user.role === "administrator" || user.role === "author") {
+  if (user.role === "ADMIN" || user.role === "USER") {
     post = await getAdminPost(params.postId);
   } else {
     post = await getPostForUser(params.postId, user.id);

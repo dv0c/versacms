@@ -10,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model User {
   id             String     @id @default(auto()) @map("_id") @db.ObjectId
   name           String
@@ -19,7 +24,7 @@ model User {
   hashedPassword String?
   createdAt      DateTime   @default(now())
   updateAt       DateTime   @updatedAt
-  role           String     @default("user")
+  role           Role       @default(USER)
   sessions       Session[]
   accounts       Account[]
   Post           Post[]

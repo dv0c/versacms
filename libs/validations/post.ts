@@ -5,5 +5,5 @@ export const postPatchSchema = z.object({
 
   // TODO: Type this properly from editorjs block types?
   content: z.any().optional(),
-  thumbnail: z.string().optional(),
+  thumbnail: z.string().optional().nullable(),
 });
